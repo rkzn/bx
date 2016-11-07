@@ -35,18 +35,17 @@ class Book
     /**
      * @var string
      */
-    private $imageS;
+    private $ImageUrlS;
 
     /**
      * @var string
      */
-    private $imageM;
+    private $ImageUrlM;
 
     /**
      * @var string
      */
-    private $imageL;
-
+    private $ImageUrlL;
 
     /**
      * Set iSBN
@@ -168,91 +167,6 @@ class Book
         return $this->publisher;
     }
 
-    /**
-     * Set imageS
-     *
-     * @param string $imageS
-     *
-     * @return Book
-     */
-    public function setImageS($imageS)
-    {
-        $this->imageS = $imageS;
-
-        return $this;
-    }
-
-    /**
-     * Get imageS
-     *
-     * @return string
-     */
-    public function getImageS()
-    {
-        return $this->imageS;
-    }
-
-    /**
-     * Set imageM
-     *
-     * @param string $imageM
-     *
-     * @return Book
-     */
-    public function setImageM($imageM)
-    {
-        $this->imageM = $imageM;
-
-        return $this;
-    }
-
-    /**
-     * Get imageM
-     *
-     * @return string
-     */
-    public function getImageM()
-    {
-        return $this->imageM;
-    }
-
-    /**
-     * Set imageL
-     *
-     * @param string $imageL
-     *
-     * @return Book
-     */
-    public function setImageL($imageL)
-    {
-        $this->imageL = $imageL;
-
-        return $this;
-    }
-
-    /**
-     * Get imageL
-     *
-     * @return string
-     */
-    public function getImageL()
-    {
-        return $this->imageL;
-    }
-    /**
-     * @var string
-     */
-    private $ImageUrlS;
-
-    /**
-     * @var string
-     */
-    private $ImageUrlM;
-
-    /**
-     * @var string
-     */
-    private $ImageUrlL;
 
 
     /**

@@ -38,3 +38,10 @@ AppBundle\Entity\Book:
           column: ImageUrlL
           type: string
           length: 255
+    indexes:
+        IDX_Author:
+            columns: [ Author ]
+        IDX_Year:
+            columns: [ YearOfPublication ]
+        IDX_Publisher:
+            columns: [ Publisher ]

@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d5491a32a19adbd67fbcd668c18bb8a7",
-    "content-hash": "0e4f5e93ec912d8d118d10c3ea76b160",
+    "hash": "d797dab13be05cd1589d002bb2889406",
+    "content-hash": "d6ab1169e600724063b8160834f25f4f",
     "packages": [
         {
             "name": "apy/datagrid-bundle",
@@ -142,6 +142,78 @@
                 "typeahead"
             ],
             "time": "2016-03-06 15:12:23"
+        },
+        {
+            "name": "ddeboer/data-import",
+            "version": "0.20.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ddeboer/data-import.git",
+                "reference": "8fe7e731bb52df0298707eb8fb8b9b8098395437"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ddeboer/data-import/zipball/8fe7e731bb52df0298707eb8fb8b9b8098395437",
+                "reference": "8fe7e731bb52df0298707eb8fb8b9b8098395437",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0",
+                "psr/log": "~1.0"
+            },
+            "require-dev": {
+                "doctrine/dbal": "~2.4",
+                "doctrine/orm": "~2.4",
+                "ext-iconv": "*",
+                "ext-mbstring": "*",
+                "ext-sqlite3": "*",
+                "henrikbjorn/phpspec-code-coverage": "~1.0",
+                "phpoffice/phpexcel": "*",
+                "phpspec/phpspec": "~2.1",
+                "symfony/console": "~2.8|~3.0",
+                "symfony/property-access": "~2.5",
+                "symfony/validator": "~2.8|~3.0"
+            },
+            "suggest": {
+                "doctrine/dbal": "If you want to use the DbalReader",
+                "ext-iconv": "For the CharsetValueConverter",
+                "ext-mbstring": "For the CharsetValueConverter",
+                "phpoffice/phpexcel": "If you want to use the ExcelReader",
+                "symfony/console": "If you want to use the ConsoleProgressWriter",
+                "symfony/property-access": "If you want to use the ObjectConverter",
+                "symfony/validator": "to use the ValidatorFilter"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ddeboer\\DataImport\\": "src/",
+                    "Ddeboer\\DataImport\\Tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "The community",
+                    "homepage": "https://github.com/ddeboer/data-import/graphs/contributors"
+                },
+                {
+                    "name": "David de Boer",
+                    "email": "david@ddeboer.nl"
+                }
+            ],
+            "description": "Import data from, and export data to, a range of file formats and media",
+            "keywords": [
+                "csv",
+                "data",
+                "doctrine",
+                "excel",
+                "export",
+                "import"
+            ],
+            "time": "2016-06-23 06:26:02"
         },
         {
             "name": "doctrine/annotations",
@@ -1674,56 +1746,6 @@
             "time": "2015-11-10 12:26:42"
         },
         {
-            "name": "maxmind/geoip",
-            "version": "v1.1.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/IDCI-Consulting/Maxmind-GeoIp.git",
-                "reference": "d19a4454f2a13ba54f1bd2e25c6c54784c1cb059"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/IDCI-Consulting/Maxmind-GeoIp/zipball/d19a4454f2a13ba54f1bd2e25c6c54784c1cb059",
-                "reference": "d19a4454f2a13ba54f1bd2e25c6c54784c1cb059",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-4": {
-                    "Maxmind\\": "src/Maxmind/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "BSD"
-            ],
-            "authors": [
-                {
-                    "name": "Sébastien Roch",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Ariel Ferrandini",
-                    "email": "arielferrandini@gmail.com",
-                    "homepage": "http://ferrandini.com",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Gabriel BONDAZ",
-                    "email": "gabriel.bondaz@idci-consulting.fr",
-                    "role": "Developer"
-                }
-            ],
-            "description": "MaxMind GeoIP Symfony2 Bundle",
-            "keywords": [
-                "maxmind geoip"
-            ],
-            "time": "2016-10-14 15:36:10"
-        },
-        {
             "name": "michelf/php-markdown",
             "version": "1.7.0",
             "source": {
@@ -3219,6 +3241,51 @@
                 "templating"
             ],
             "time": "2016-10-25 19:17:17"
+        },
+        {
+            "name": "vipsoft/unzip",
+            "version": "1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/vipsoft/Unzip.git",
+                "reference": "657cda91648db84b8882e6ac881e2fd439bbe82c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/vipsoft/Unzip/zipball/657cda91648db84b8882e6ac881e2fd439bbe82c",
+                "reference": "657cda91648db84b8882e6ac881e2fd439bbe82c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-zip": "*",
+                "php": ">=5.3.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "VIPSoft\\Unzip": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anthon Pang",
+                    "email": "apang@softwaredevelopment.ca",
+                    "role": "developer"
+                }
+            ],
+            "description": "Unzip library - a ZipArchive wrapper",
+            "homepage": "http://github.com/vipsoft/",
+            "keywords": [
+                "pclzip",
+                "unzip",
+                "zip",
+                "ziparchive"
+            ],
+            "time": "2016-02-16 04:29:22"
         },
         {
             "name": "willdurand/faker-bundle",
@@ -4866,7 +4933,8 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "friendsofsymfony/user-bundle": 20
+        "friendsofsymfony/user-bundle": 20,
+        "ddeboer/data-import": 0
     },
     "prefer-stable": false,
     "prefer-lowest": false,

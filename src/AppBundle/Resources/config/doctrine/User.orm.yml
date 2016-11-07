@@ -18,3 +18,8 @@ AppBundle\Entity\User:
           column: Age
           type: integer
           length: 11
+    indexes:
+        IDX_Location:
+            columns: [ Location ]
+        IDX_Age:
+            columns: [ Age ]

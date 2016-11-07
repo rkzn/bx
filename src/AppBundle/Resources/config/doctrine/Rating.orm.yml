@@ -22,3 +22,6 @@ AppBundle\Entity\Rating:
           length: 11
           options:
                 default: '0'
+    indexes:
+        IDX_Author:
+            columns: [ Author ]

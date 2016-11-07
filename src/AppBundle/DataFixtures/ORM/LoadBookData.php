@@ -63,7 +63,7 @@ class LoadBookData extends AbstractFixture implements OrderedFixtureInterface, C
         $dataPath =  $rootPath . '/../src/AppBundle/Resources/data/';
 
         $unzip = new Unzip();
-        $unzip->extract($rootPath . $dataPath.'BX-CSV-Dump.zip', $dataPath);
+        $unzip->extract($dataPath.'BX-CSV-Dump.zip', $dataPath);
 
         $connection = $manager->getConnection();
 

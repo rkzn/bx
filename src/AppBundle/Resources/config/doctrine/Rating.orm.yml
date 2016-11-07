@@ -23,5 +23,5 @@ AppBundle\Entity\Rating:
           options:
                 default: '0'
     indexes:
-        IDX_Author:
-            columns: [ Author ]
+        IDX_Rating:
+            columns: [ Rating ]

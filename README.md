@@ -18,5 +18,5 @@ Instructions to run the tests:
 
 Demo:
 
-* http://bx.diamond.kazansky.su
+* http://books.diamond.kazansky.su
 

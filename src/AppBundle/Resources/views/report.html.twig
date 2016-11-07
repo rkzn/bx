@@ -1,0 +1,95 @@
+{% extends 'AppBundle::layout.html.twig' %}
+
+{% block content %}
+    {{ grid(grid, _self) }}
+{% endblock %}
+
+{% block grid %}
+    <div class="grid">
+        {% if grid.totalCount > 0 or grid.isFiltered or grid.noDataMessage is sameas(false) %}
+            <form id="{{ grid.hash }}" action="{{ grid.routeUrl }}" method="post">
+                <div class="grid_header">
+                    {% if grid.massActions|length > 0 %}
+                        {{ grid_actions(grid) }}
+                    {% endif %}
+                </div>
+                <div class="grid_body">
+                    <table class="table table-bordered">
+                        {% if grid.isTitleSectionVisible %}
+                            {{ grid_titles(grid) }}
+                        {% endif %}
+                        {% if grid.isFilterSectionVisible %}
+                            {{ grid_filters(grid) }}
+                        {% endif %}
+                        {{ grid_rows(grid) }}
+                    </table>
+                </div>
+                <div class="grid_footer">
+                    {% if grid.isPagerSectionVisible %}
+                        {{ grid_pager(grid) }}
+                    {% endif %}
+                    {% if grid.exports|length > 0 %}
+                        {{ grid_exports(grid) }}
+                    {% endif %}
+                    {% if grid.tweaks|length > 0 %}
+                        {{ grid_tweaks(grid) }}
+                    {% endif %}
+                </div>
+                {% if withjs %}
+                    {{ grid_scripts(grid) }}
+                {% endif %}
+            </form>
+        {% else %}
+            {{ grid_no_data(grid) }}
+        {% endif %}
+    </div>
+{% endblock grid %}
+
+{% block grid_titles %}
+    <tr class="grid-row-titles">
+        {% for column in grid.columns %}
+            {% if column.visible(grid.isReadyForExport) %}
+                <th class="{% if column.align != 'left'%}align-{{ column.align }}{% endif %}{% if column.class %} {{ column.class }}{% endif %}{% if loop.last %} last-column{% endif %}"{% if(column.size > -1) %} style="width:{{ column.size }}px;"{% endif %}>
+                    {%- spaceless %}
+                        {% if column.type == 'massaction' %}
+                            <input type="checkbox" class="grid-mass-selector" onclick="{{ grid.hash }}_markVisible(this.checked);"/>
+                        {% else %}
+                            {% if column.usePrefixTitle == true %}
+                                {% set columnTitle = grid.prefixTitle ~ column.title ~ '__abbr' %}
+                                {% if columnTitle|trans == columnTitle %}
+                                    {% set columnTitle = grid.prefixTitle ~ column.title %}
+                                {% endif %}
+                            {% else %}
+                                {% set columnTitle = column.title %}
+                            {% endif %}
+                            {% if (column.sortable) %}
+                                <a class="order" href="{{ grid_url('order', grid, column) }}" title="{{ 'Order by'|trans }} {{ columnTitle|trans }}">{{ columnTitle|trans }}</a>
+                                {% if column.order == 'asc' %}
+                                    <div class="sort_up"></div>
+                                {% elseif column.order == 'desc' %}
+                                    <div class="sort_down"></div>
+                                {% endif %}
+                            {% else %}
+                                {{ columnTitle|trans }}
+                            {% endif %}
+                        {% endif %}
+                    {% endspaceless -%}
+                </th>
+            {% endif %}
+        {% endfor %}
+    </tr>
+{% endblock grid_titles %}
+
+{% block grid_exports %}
+    <div class="exports form-inline" style="">
+        {% spaceless %}
+            <select name="{{grid.hash}}[{{ constant('APY\\DataGridBundle\\Grid\\Grid::REQUEST_QUERY_EXPORT') }}]" class="form-control input-small">
+                <option value="-1"></option>
+                {% for key, export in grid.exports %}
+                    <option value="{{key}}">{{ export.title|trans }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" value="{{ 'Export'|trans }}" class="btn btn-primary"/>
+        {% endspaceless %}
+    </div>
+{% endblock grid_exports %}

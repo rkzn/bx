@@ -1,0 +1,40 @@
+AppBundle\Entity\Book:
+    type:  entity
+    table: Book
+    repositoryClass: AppBundle\Entity\BookRepository
+    id:
+        ISBN:
+            column: "ISBN"
+            type: string
+            length: 13
+            options:
+                default: ''
+    fields:
+        title:
+          column: Title
+          type: string
+          length: 255
+        author:
+          column: Author
+          type: string
+          length: 255
+        year:
+          column: YearOfPublication
+          type: integer
+          length: 10
+        publisher:
+          column: Publisher
+          type: string
+          length: 255
+        ImageUrlS:
+          column: ImageUrlS
+          type: string
+          length: 255
+        ImageUrlM:
+          column: ImageUrlM
+          type: string
+          length: 255
+        ImageUrlL:
+          column: ImageUrlL
+          type: string
+          length: 255

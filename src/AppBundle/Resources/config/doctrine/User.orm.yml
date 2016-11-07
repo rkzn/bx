@@ -1,0 +1,20 @@
+AppBundle\Entity\User:
+    type:  entity
+    table: BookUser
+    repositoryClass: AppBundle\Entity\UserRepository
+    id:
+        id:
+            column: "UserId"
+            type: integer
+            length: 11
+            options:
+                default: '0'
+    fields:
+        location:
+          column: Location
+          type: string
+          length: 250
+        age:
+          column: Age
+          type: integer
+          length: 11

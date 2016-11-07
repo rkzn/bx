@@ -1,0 +1,20 @@
+parameters:
+    app_books.class: AppBundle\BooksManager
+
+services:
+
+# == Managers ===
+    app_books:
+        class: '%app_books.class%'
+        arguments: [ '@doctrine.orm.entity_manager' ]
+        calls:
+            - [ setContainer, ['@service_container']]
+
+# === Forms ===
+#    app_client.form.registration:
+#        class: '%app_client.form.registration.class%'
+#        calls:
+#            - [ setContainer, ['@service_container']]
+#        tags:
+#            - { name: form.type, alias: registration_form }
+

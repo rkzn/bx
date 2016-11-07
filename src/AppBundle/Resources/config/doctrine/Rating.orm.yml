@@ -1,0 +1,24 @@
+AppBundle\Entity\Rating:
+    type:  entity
+    table: BookRating
+    repositoryClass: AppBundle\Entity\RatingRepository
+    id:
+        UserId:
+            column: "UserId"
+            type: integer
+            length: 11
+            options:
+                default: '0'
+        ISBN:
+            column: "ISBN"
+            type: string
+            length: 13
+            options:
+                default: ''
+    fields:
+        rating:
+          column: Rating
+          type: integer
+          length: 11
+          options:
+                default: '0'

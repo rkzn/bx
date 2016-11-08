@@ -1,0 +1,20 @@
+book:
+  list:
+    link: back to book list
+    headline: Available books
+    empty: No books found
+  new:
+    link: create new book
+    headline: Create new book
+    submit: add book
+  edit:
+    link: edit
+    headline: Edit book %isbn%
+    submit: update book
+  remove:
+    link: remove
+  offset: offset
+  limit: limit
+api:
+  doc:
+    link: API documentation

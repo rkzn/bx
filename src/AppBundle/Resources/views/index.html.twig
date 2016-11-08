@@ -4,13 +4,24 @@
 {% endmacro %}
 {% import _self as ng %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('js/app.js') }}"></script>
-{% endblock %}
-
 {% block content %}
-    <div class="site-index" ng-controller="DefaultController as app" ng-init="">
-        content
+    <div class="site-index">
+        <h3>Rating by country</h3>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <td>Country</td>
+                <td>Users</td>
+            </tr>
+            </thead>
+            {% for country in countries %}
+                <tr>
+                    <td><a href="{{ path('api_get_books_ranking_per_country', {'country': country.Country}) }}">{{ country.Country }}</a></td>
+                    <td>{{ country.Users }}</td>
+                </tr>
+            {% else %}
+                {{ 'book.list.empty'|trans({}, 'AppBundle') }}
+            {% endfor %}
+        </table>
     </div>
 {% endblock %}

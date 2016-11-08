@@ -13,7 +13,10 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        return $this->render('AppBundle::index.html.twig', []);
+        $bookManager = $this->container->get('app_books');
+        $countries = $bookManager->getCountryList();
+
+        return $this->render('AppBundle::index.html.twig', ['countries' => $countries]);
     }
 
 }

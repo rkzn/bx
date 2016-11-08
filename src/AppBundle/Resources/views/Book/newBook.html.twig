@@ -1,0 +1,17 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block title "Books" %}
+
+{% block content %}
+    <h1 class="title">{{ 'book.new.headline'|trans({}, 'AppBundle') }}</h1>
+
+    {%  if (form is defined) %}
+    <form action="{{ url('api_post_books') }}" method="POST" {{ form_enctype(form) }}>
+
+        {{ form_widget(form) }}
+
+        <input type="submit" value="{% trans from 'AppBundle' %}book.new.submit{% endtrans %}">
+    </form>
+    {% endif %}
+
+{% endblock %}

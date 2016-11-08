@@ -1,0 +1,26 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block title "Book" %}
+
+{% block content %}
+    <p>
+        {{ 'book.offset'|trans({}, 'AppBundle') }}: {{ data.offset ?: '-' }}, {{ 'book.limit'|trans({}, 'AppBundle') }}: {{ data.limit }}
+    </p>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <td>ISBN</td>
+            <td>Rating</td>
+        </tr>
+        </thead>
+        {% for rate in data.rating %}
+            <tr>
+                <td><a href="{{ path('api_get_book', {'isbn': rate.ISBN}) }}">{{ rate.ISBN }}</a></td>
+                <td>{{ rate.Rating }}</td>
+            </tr>
+        {% else %}
+            {{ 'book.list.empty'|trans({}, 'AppBundle') }}
+        {% endfor %}
+    </table>
+{% endblock %}

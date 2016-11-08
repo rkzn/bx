@@ -14,7 +14,7 @@ parameters:
 
 framework:
     #esi:             ~
-    #translator:      { fallbacks: ["%locale%"] }
+    translator:      { fallbacks: ["%locale%"] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -33,7 +33,6 @@ framework:
         handler_id:  ~
     fragments:       ~
     http_method_override: true
-    translator: ~
 # Twig Configuration
 twig:
     debug:            "%kernel.debug%"

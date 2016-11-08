@@ -25,3 +25,5 @@ AppBundle\Entity\Rating:
     indexes:
         IDX_Rating:
             columns: [ Rating ]
+        IDX_ISBN:
+            columns: [ ISBN ]

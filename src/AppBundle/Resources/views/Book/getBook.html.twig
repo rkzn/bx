@@ -1,0 +1,17 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block title "Book" %}
+
+{% block content %}
+    <h1 class="title">Book #{{ isbn }}</h1>
+    <p>{{ book.title }}</p>
+    <p>{{ book.author }}</p>
+    <p>{{ book.year }}</p>
+    <p>{{ book.publisher }}</p>
+    <img src="{{ book.ImageUrlL }}" />
+    <p>
+        <a href="{{ path('api_get_books') }}">{{ 'book.list.link'|trans({}, 'AppBundle') }}</a> <br>
+        [<a href="{{ path('api_remove_books', {'isbn': isbn}) }}">{{ 'book.remove.link'|trans({}, 'AppBundle') }}</a>]
+        [<a href="{{ path('api_edit_books', {'isbn': isbn}) }}">{{ 'book.edit.link'|trans({}, 'AppBundle') }}</a>]
+    </p>
+{% endblock %}

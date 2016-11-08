@@ -1,3 +1,7 @@
+/src/AppBundle/Resources/data/sql.md
+/src/AppBundle/Resources/data/BX-Users.csv
+/src/AppBundle/Resources/data/BX-Books.csv
+/src/AppBundle/Resources/data/BX-Book-Ratings.csv
 /web/bundles/
 /app/bootstrap.php.cache
 /app/cache/*

@@ -1,0 +1,15 @@
+{% extends "AppBundle::layout.html.twig" %}
+
+{% block title "Books" %}
+
+{% block content %}
+    <h1 class="title">{{ 'book.edit.headline'|trans({'%isbn%': isbn}, 'AppBundle') }}</h1>
+
+    <form action="{{ url('api_put_books', {'isbn': isbn}) }}" method="POST" {{ form_enctype(form) }}>
+        <input type="hidden" name="_method" value="put" />
+
+        {{ form_widget(form) }}
+
+        <input type="submit" value="{% trans from 'AppBundle' %}book.edit.submit{% endtrans %}">
+    </form>
+{% endblock %}

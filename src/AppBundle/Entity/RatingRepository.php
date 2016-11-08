@@ -10,4 +10,24 @@ namespace AppBundle\Entity;
  */
 class RatingRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findRatingByCountry($country, $offset, $limit)
+    {
+        $sql = <<<sql
+SELECT t.ISBN, t.Rating FROM (
+	SELECT STRAIGHT_JOIN br.`ISBN`, AVG(br.Rating) Rating, COUNT(br.`ISBN`) Cnt
+	FROM `BookRating` br
+	JOIN `BookUser` bu ON bu.`UserId` = br.`UserId`
+	WHERE 1
+	AND bu.`Location` LIKE '%s'
+	GROUP BY br.`ISBN`
+	HAVING Cnt  > 1
+) t ORDER BY Rating DESC, Cnt DESC LIMIT %s, %s;
+sql;
+        $sql = sprintf($sql, '%'.$country, $offset, $limit);
+
+        $conn = $this->getEntityManager()->getConnection();
+        $data = $conn->executeQuery($sql);
+
+        return $data->fetchAll();
+    }
 }

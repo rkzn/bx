@@ -20,3 +20,10 @@ Demo:
 
 * http://books.diamond.kazansky.su
 
+TEST REST API
+
+Books Rating Per Country
+* run `curl -i -H "Content-Type: application/json" -X GET {url}/api/books/ranking/per/country.json?country=usa`
+* run `curl -i -H "Content-Type: application/json" -X GET {url}/api/books/ranking/per/country.json?country=spain`
+* run `curl -i -H "Content-Type: application/json" -X GET {url}/api/books/ranking/per/country.json?country=germany`
+

@@ -10,4 +10,16 @@ namespace AppBundle\Entity;
  */
 class BookRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAuthors($offset, $limit)
+    {
+        $data = $this->createQueryBuilder('b')
+            ->select('b.author', 'COUNT(b.ISBN) as cnt')
+                ->groupBy('b.author')
+            ->setMaxResults($limit)
+            ->setFirstResult($offset)
+            ->getQuery()->getResult();
+
+        return $data;
+    }
+
 }

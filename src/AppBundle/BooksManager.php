@@ -39,9 +39,9 @@ class BooksManager implements ContainerAwareInterface
         $this->entityManager->flush();
     }
 
-    public function removeBook($isbn)
+    public function removeBook(Book $book)
     {
-        $book = $this->getBook($isbn);
+
 
         $this->entityManager->remove($book);
         $this->entityManager->flush();

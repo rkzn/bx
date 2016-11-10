@@ -8,6 +8,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Ddeboer\DataImport\Reader\CsvReader;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
+use Symfony\Component\Filesystem\Filesystem;
 use VIPSoft\Unzip\Unzip;
 
 class LoadBookData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
@@ -59,17 +61,27 @@ class LoadBookData extends AbstractFixture implements OrderedFixtureInterface, C
     {
         $batchSize = 100;
 
+        $zipFile = 'BX-CSV-Dump.zip';
         $rootPath = $this->container->get('kernel')->getRootDir();
         $dataPath =  $rootPath . '/../src/AppBundle/Resources/data/';
 
-        $unzip = new Unzip();
-        $unzip->extract($dataPath.'BX-CSV-Dump.zip', $dataPath);
+        $fs = new Filesystem();
+        if ($fs->exists($dataPath.$zipFile)) {
+            $unzip = new Unzip();
+            $unzip->extract($dataPath.$zipFile, $dataPath);
+        } else {
+            throw new FileNotFoundException(null, 0, null, $dataPath.$zipFile);
+        }
 
         $connection = $manager->getConnection();
 
         foreach ($this->resources as $resource) {
             $tableName = $manager->getClassMetadata($resource['entity'])->getTableName();
             $filePath = $dataPath.$resource['file'];
+
+            if ($fs->exists($filePath) == false) {
+                throw new FileNotFoundException(null, 0, null, $filePath);
+            }
 
             $file = new \SplFileObject($filePath);
             $reader = new CsvReader($file, ";");

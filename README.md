@@ -1,7 +1,7 @@
 BX test app
 ===========
 
-Instructions to run the app:
+# Instructions to run the app:
 
 * clone project
 * create MySQL database for app and fill parameters in app/config/parameters.yml 
@@ -11,19 +11,25 @@ Instructions to run the app:
 * run `php app/console server:run 127.0.0.1:8001`
 * open http://127.0.0.1:8001/app_dev.php/ in your browser
 
-Instructions to run the tests:
-
-* run `php app/runtest -c app/phpunit.xml`
-
-
-Demo:
-
+# Demo:
 * http://books.diamond.kazansky.su
 
-TEST REST API
+    Login / Password: restapi /secretpw
 
-Books Rating Per Country
-* run `curl -i -H "Content-Type: application/json" -X GET {url}/api/books/ranking/per/country.json?country=usa`
-* run `curl -i -H "Content-Type: application/json" -X GET {url}/api/books/ranking/per/country.json?country=spain`
-* run `curl -i -H "Content-Type: application/json" -X GET {url}/api/books/ranking/per/country.json?country=germany`
+Using the console after installing httpie.org or some other http client
+you can run some commands to test the API as well:
 
+    http "http://books.diamond.kazansky.su/api/books" --json -a restapi:secretpw
+    http "http://books.diamond.kazansky.su/api/books?offset=10&limit=5" --json -a restapi:secretpw
+    
+    http "http://books.diamond.kazansky.su/api/books/ranking/per/country.json?country=usa" --json -a restapi:secretpw
+    http "http://books.diamond.kazansky.su/api/books/ranking/per/country.json?country=spain&limit=2" --json -a restapi:secretpw
+    http "http://books.diamond.kazansky.su/api/books/ranking/per/country.json?country=germany&offset=10" --json -a restapi:secretpw
+    
+    http "http://books.diamond.kazansky.su/api/books/0001010565" --json -a restapi:secretpw
+    http DELETE "http://books.diamond.kazansky.su/api/books/0001010565" --json -a restapi:secretpw
+    
+    http POST "http://books.diamond.kazansky.su/api/books" --json -a restapi:secretpw < book.json
+    http PUT "http://books.diamond.kazansky.su/api/books/0001010565" --json -a restapi:secretpw < book.json
+    http PUT "http://books.diamond.kazansky.su/api/books/0001010565" --json -a restapi:secretpw < book.json
+    

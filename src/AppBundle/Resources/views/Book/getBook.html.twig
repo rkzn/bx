@@ -13,7 +13,6 @@
                     <a class="btn btn-sm btn-danger" href="{{ path('api_remove_books', {'isbn': isbn}) }}">{{ 'book.remove.link'|trans({}, 'AppBundle') }}</a>
                     <a class="btn btn-sm btn-warning" href="{{ path('api_edit_books', {'isbn': isbn}) }}">{{ 'book.edit.link'|trans({}, 'AppBundle') }}</a>
                 </div>
-
                 Book #{{ isbn }}</h1>
 
             <p>{{ book.title }}</p>
@@ -31,7 +30,6 @@
 
             <div class="clearfix"></div>
             <a href="{{ path('api_get_books') }}">{{ 'book.list.link'|trans({}, 'AppBundle') }}</a>
-            {{ dump(rating) }}
             <div class="well well-sm">
                 <div class="row">
                     <div class="col-xs-4 col-md-4 text-center">

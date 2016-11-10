@@ -14,7 +14,6 @@ use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\VarDumper\VarDumper;
 
 class ApiRestController extends FOSRestController
 {
@@ -68,6 +67,10 @@ class ApiRestController extends FOSRestController
      */
     public function newBookAction()
     {
+        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_API') == false) {
+            throw $this->createAccessDeniedException();
+        }
+
         return $this->createForm(new BookType());
     }
 
@@ -78,7 +81,7 @@ class ApiRestController extends FOSRestController
      *   output = "AppBundle\Entity\Book",
      *   statusCodes = {
      *     200 = "Returned when successful",
-     *     404 = "Returned when the note is not found"
+     *     404 = "Returned when the book is not found"
      *   }
      * )
      *
@@ -91,16 +94,14 @@ class ApiRestController extends FOSRestController
      *
      * @return array
      *
-     * @throws NotFoundHttpException when note not exist
+     * @throws NotFoundHttpException when book not exist
      */
     public function getBookAction($isbn)
     {
-        VarDumper::dump($this->container->get('security.context')->isGranted('ROLE_API'));
-        VarDumper::dump($this->container->get('security.token_storage')->isGranted('ROLE_API'));
         $book = $this->get('app_books')->getBook($isbn);
 
         if (empty($book)) {
-            throw $this->createNotFoundException("Note does not exist.");
+            throw $this->createNotFoundException("book does not exist.");
         }
 
         $rating = [
@@ -152,9 +153,17 @@ class ApiRestController extends FOSRestController
      */
     public function postBooksAction(Request $request)
     {
+        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_API') == false) {
+            throw $this->createAccessDeniedException();
+        }
+
         $book = new Book();
         $form = $this->createForm(new BookType(), $book);
         $form->submit($request);
+
+        if ($this->get('app_books')->getBook($book->getISBN()) instanceof Book) {
+            throw $this->createNotFoundException("book already exist.");
+        }
 
         if ($form->isValid()) {
             $this->get('app_books')->saveBook($book);
@@ -174,7 +183,7 @@ class ApiRestController extends FOSRestController
      *   resource = true,
      *   statusCodes={
      *     200 = "Returned when successful",
-     *     404 = "Returned when the note is not found"
+     *     404 = "Returned when the book is not found"
      *   }
      * )
      *
@@ -186,20 +195,24 @@ class ApiRestController extends FOSRestController
      *
      * @return FormTypeInterface
      *
-     * @throws NotFoundHttpException when note not exist
+     * @throws NotFoundHttpException when book not exist
      */
     public function editBooksAction($isbn)
     {
+        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_API') == false) {
+            throw $this->createAccessDeniedException();
+        }
+
         $book = $this->get('app_books')->getBook($isbn);
         if (false === $book) {
-            throw $this->createNotFoundException("Note does not exist.");
+            throw $this->createNotFoundException("book does not exist.");
         }
 
         return $this->createForm(new BookType(), $book);
     }
 
     /**
-     * Update existing book from the submitted data or create a new note at a specific location.
+     * Update existing book from the submitted data or create a new book at a specific location.
      *
      * @ApiDoc(
      *   resource = true,
@@ -221,10 +234,14 @@ class ApiRestController extends FOSRestController
      *
      * @return FormTypeInterface|View
      *
-     * @throws NotFoundHttpException when note not exist
+     * @throws NotFoundHttpException when book not exist
      */
     public function putBooksAction(Request $request, $isbn)
     {
+        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_API') == false) {
+            throw $this->createAccessDeniedException();
+        }
+
         $book = $this->get('app_books')->getBook($isbn);
         if (false === $book) {
             $book = new Book();
@@ -262,10 +279,18 @@ class ApiRestController extends FOSRestController
      */
     public function deleteBooksAction($isbn)
     {
-        $this->get('app_books')->removeBook($isbn);
+        if ($this->container->get('security.authorization_checker')->isGranted('ROLE_API') == false) {
+            throw $this->createAccessDeniedException();
+        }
 
-        // There is a debate if this should be a 404 or a 204
-        // see http://leedavis81.github.io/is-a-http-delete-requests-idempotent/
+        $book = $this->get('app_books')->getBook($isbn);
+
+        if (empty($book)) {
+            throw $this->createNotFoundException("book does not exist.");
+        }
+
+        $this->get('app_books')->removeBook($book);
+
         return $this->routeRedirectView('api_get_books', [], Response::HTTP_NO_CONTENT);
     }
 

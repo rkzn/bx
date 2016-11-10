@@ -61,6 +61,13 @@ class BooksManager implements ContainerAwareInterface
         return $repo->findRatingByCountry($country, $offset, $limit);
     }
 
+    public function getBookRankingPerCountry($isbn)
+    {
+        $repo = $this->entityManager->getRepository('AppBundle:Rating');
+
+        return $repo->findBookRatingByCountry($isbn);
+    }
+
     public function getCountryList()
     {
         $repo = $this->entityManager->getRepository('AppBundle:User');

@@ -14,6 +14,7 @@ use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\VarDumper\VarDumper;
 
 class ApiRestController extends FOSRestController
 {
@@ -94,13 +95,33 @@ class ApiRestController extends FOSRestController
      */
     public function getBookAction($isbn)
     {
+        VarDumper::dump($this->container->get('security.context')->isGranted('ROLE_API'));
+        VarDumper::dump($this->container->get('security.token_storage')->isGranted('ROLE_API'));
         $book = $this->get('app_books')->getBook($isbn);
 
         if (empty($book)) {
             throw $this->createNotFoundException("Note does not exist.");
         }
 
-        $view = new View($book);
+        $rating = [
+            'countries' => $this->get('app_books')->getBookRankingPerCountry($book->getISBN()),
+            'totalRating' => 0,
+            'totalUsers' => 0
+        ];
+
+        $countRate = count($rating['countries']);
+
+        foreach($rating['countries'] as &$rateCountry) {
+            $rating['totalUsers'] += $rateCountry['Users'];
+            $rating['totalRating'] += $rateCountry['Rating'];
+            $rateCountry['Percent'] = $rateCountry['Rating'] / 10 * 100;
+        }
+
+        if ($countRate > 0) {
+            $rating['totalRating'] = $rating['totalRating'] / $countRate;
+        }
+
+        $view = new View(['book' => $book, 'rating' => $rating]);
         $group = $this->container->get('security.context')->isGranted('ROLE_API') ? 'restapi' : 'standard';
         $view->getContext()->addGroup('Default');
         $view->getContext()->addGroup($group);

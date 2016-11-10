@@ -3,15 +3,77 @@
 {% block title "Book" %}
 
 {% block content %}
-    <h1 class="title">Book #{{ isbn }}</h1>
-    <p>{{ book.title }}</p>
-    <p>{{ book.author }}</p>
-    <p>{{ book.year }}</p>
-    <p>{{ book.publisher }}</p>
-    <img src="{{ book.ImageUrlL }}" />
-    <p>
-        <a href="{{ path('api_get_books') }}">{{ 'book.list.link'|trans({}, 'AppBundle') }}</a> <br>
-        [<a href="{{ path('api_remove_books', {'isbn': isbn}) }}">{{ 'book.remove.link'|trans({}, 'AppBundle') }}</a>]
-        [<a href="{{ path('api_edit_books', {'isbn': isbn}) }}">{{ 'book.edit.link'|trans({}, 'AppBundle') }}</a>]
-    </p>
+    <div class="row">
+        <div class="col-md-5">
+            <img src="{{ book.ImageUrlL }}" class="thumbnail"/>
+        </div>
+        <div class="col-md-7">
+            <h1 class="title">
+                <div class="btn-group pull-right">
+                    <a class="btn btn-sm btn-danger" href="{{ path('api_remove_books', {'isbn': isbn}) }}">{{ 'book.remove.link'|trans({}, 'AppBundle') }}</a>
+                    <a class="btn btn-sm btn-warning" href="{{ path('api_edit_books', {'isbn': isbn}) }}">{{ 'book.edit.link'|trans({}, 'AppBundle') }}</a>
+                </div>
+
+                Book #{{ isbn }}</h1>
+
+            <p>{{ book.title }}</p>
+            <dl class="dl-horizontal">
+                <dt>Author</dt>
+                <dd>{{ book.author }}</dd>
+
+                <dt>Publisher</dt>
+                <dd>{{ book.publisher }}</dd>
+
+                <dt>Year</dt>
+                <dd>{{ book.year }}</dd>
+            </dl>
+
+
+            <div class="clearfix"></div>
+            <a href="{{ path('api_get_books') }}">{{ 'book.list.link'|trans({}, 'AppBundle') }}</a>
+            {{ dump(rating) }}
+            <div class="well well-sm">
+                <div class="row">
+                    <div class="col-xs-4 col-md-4 text-center">
+                        <h1 class="rating-num"><span class="glyphicon glyphicon-star"></span>{{ rating.totalRating|round(1) }}</h1>
+                        {#<div class="rating">#}
+                            {#<span class="glyphicon glyphicon-star"></span>#}
+                            {#<span class="glyphicon glyphicon-star">#}
+                            {#</span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star">#}
+                            {#</span><span class="glyphicon glyphicon-star-empty"></span>#}
+                        {#</div>#}
+                        <div>
+                            <span class="glyphicon glyphicon-user"></span> {{ rating.totalUsers }} total
+                        </div>
+                    </div>
+                    <div class="col-xs-8 col-md-8">
+                        <div class="row rating-desc">
+                            {% for rate in rating.countries %}
+                            <div class="col-xs-4 col-md-4 text-right">
+                                {{ rate.Country }}
+                            </div>
+                            <div class="col-xs-2 col-md-2 text-right">
+                                <span class="glyphicon glyphicon-star"></span>{{ rate.Rating|round(1) }}
+                            </div>
+                            <div class="col-xs-6 col-md-6">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20"
+                                         aria-valuemin="0" aria-valuemax="100" style="width: {{ rate.Percent }}%">
+                                        <span class="sr-only">{{ rate.Percent }}%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end 5 -->
+                            {% endfor %}
+
+
+                        </div>
+                        <!-- end row -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 {% endblock %}

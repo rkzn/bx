@@ -3,41 +3,34 @@
 {% block title "Books" %}
 
 {% block content %}
-    <h1 class="title">{{ 'book.list.headline'|trans({}, 'AppBundle') }}</h1>
+
+    <h1 class="title">{{ 'book.list.headline'|trans({}, 'AppBundle') }}
+        <span class="pull-right"><a href="{{ path('api_new_book') }}" class="btn btn-sm btn-success">{{ 'book.new.link'|trans({}, 'AppBundle') }}</a></span>
+         </h1>
 
     <p>
         {{ 'book.offset'|trans({}, 'AppBundle') }}: {{ data.offset ?: '-' }}, {{ 'book.limit'|trans({}, 'AppBundle') }}: {{ data.limit }}
     </p>
 
-    <div class="row-fluid list-group">
+    <ul class="media-list main-list">
+
         {% for book in data.books %}
-            <div class="item  col-xs-3 col-lg-3 grid-group-item">
-                <div class="thumbnail">
-
-                    <div class="caption">
-                        <h4 class="group inner list-group-item-heading">{{ book.isbn }}</h4>
-                        <p class="group inner list-group-item-text">{{ book.title }}</p>
-                        <div class="row">
-                            <div class="col-xs-12 col-md-4">
-                                <a class="btn btn-danger btn-sm" href="{{ path('api_remove_books', {'isbn': book.isbn}) }}">Del</a>
-                            </div>
-                            <div class="col-xs-12 col-md-4">
-                                <a class="btn btn-warning btn-sm" href="{{ path('api_edit_books', {'isbn': book.isbn}) }}">Edit</a>
-                            </div>
-                            <div class="col-xs-12 col-md-4">
-                                <a class="btn btn-success btn-sm" href="{{ path('api_get_book', {'isbn': book.isbn}) }}">View</a>
-
-                            </div>
-                        </div>
-                    </div>
-                    <img class="group list-group-image" src="{{ book.ImageUrlM }}" alt="{{ book.title }}">
+            <li class="media">
+                <a class="pull-left" href="{{ path('api_get_book', {'isbn': book.isbn}) }}">
+                    <img class="media-object" src="{{ book.ImageUrlS }}" alt="{{ book.title }}" width="58px" height="75px"/>
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading"><a href="{{ path('api_get_book', {'isbn': book.isbn}) }}">{{ book.title }}</a></h4>
+                    <p class="by-author">{{ book.author }}</p>
+                    <p class="media-list"></p>
                 </div>
-            </div>
+            </li>
+
         {% else %}
             {{ 'book.list.empty'|trans({}, 'AppBundle') }}
         {% endfor %}
-    </div>
+    </ul>
     <p>
-        <a href="{{ path('api_new_book') }}">{{ 'book.new.link'|trans({}, 'AppBundle') }}</a>
+
     </p>
 {% endblock %}

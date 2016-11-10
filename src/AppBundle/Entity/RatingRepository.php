@@ -30,4 +30,26 @@ sql;
 
         return $data->fetchAll();
     }
+
+    public function findBookRatingByCountry($isbn)
+    {
+        $sql = <<<sql
+SELECT t.ISBN, t.Country, AVG(t.Rating) Rating, COUNT(t.UserId) Users
+FROM (
+	SELECT STRAIGHT_JOIN br.*, TRIM(SUBSTRING_INDEX(bu.`Location`, ',', -1)) Country
+	FROM `BookRating` br
+	LEFT JOIN `BookUser` bu ON bu.`UserId` = br.`UserId`
+	WHERE 1
+	AND br.`ISBN` = '%s'
+) t
+GROUP BY Country
+ORDER BY Rating DESC
+sql;
+        $sql = sprintf($sql, $isbn);
+
+        $conn = $this->getEntityManager()->getConnection();
+        $data = $conn->executeQuery($sql);
+
+        return $data->fetchAll();
+    }
 }
